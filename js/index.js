@@ -419,7 +419,6 @@
       }.bind(null,i)
     };
 
-
     //渐变换页
     // function changeBanner(btn,oDiv){
     //   for (var i = 0; i < btn.length; i++) {
@@ -620,7 +619,7 @@
    }
  }
 
- //左侧边栏显示
+  //左侧边栏显示
 function leftActive(){
  var oFixedLeftWr = document.getElementById('fixed-left-wr'),
      aFixedLeftWrLi = oFixedLeftWr.getElementsByTagName('li'),
@@ -652,6 +651,7 @@ function leftActive(){
  }
 }
 
+  //左侧边栏滚动
 function leftScroll(){
   var oFixedLeftWr = document.getElementById('fixed-left-wr'),
       aFixedLeftWrLi = oFixedLeftWr.getElementsByTagName('li'),
@@ -679,31 +679,35 @@ function leftScroll(){
 
     scrollTimer = setInterval(function(){
        var sclTopNow = document.body.scrollTop;
-       if(sclTopNow <= 0) {
+       if( sclTopNow <= 50) {
          clearInterval(scrollTimer);
-         return;
+         document.documentElement.scrollTop,document.body.scrollTop = 0;
+       } else if ( sclTopNow > 50 && sclTopNow <= 500 ) {
+          document.documentElement.scrollTop,document.body.scrollTop -= 50;
+       } else if ( sclTopNow > 500 && sclTopNow <= 1000 ) {
+          document.documentElement.scrollTop,document.body.scrollTop -= 100;
+       } else if ( sclTopNow > 1000 && sclTopNow <= 2000 ) {
+          document.documentElement.scrollTop,document.body.scrollTop -= 200;
+       } else if ( sclTopNow > 2000 && sclTopNow <= 3000 ) {
+          document.documentElement.scrollTop,document.body.scrollTop -= 300;
+       } else if ( sclTopNow > 3000 && sclTopNow <= 4000 ) {
+          document.documentElement.scrollTop,document.body.scrollTop -= 400;
        } else {
-          window.pageYOffset,document.documentElement.scrollTop,document.body.scrollTop -= 50;
-          if (Math.abs(diffNum) <= 50 ) {
-            document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
-          }
+         document.documentElement.scrollTop,document.body.scrollTop -= 500;
        }
-     },15);
+     },5)
   }
 
   //点击跳转到top
   oFixedLeftLast.onclick = function(){
-    upTop(this);
+    upTop();
   }
 
   if (oItemTop.style.display="block") {
     oItemTop.onclick=function(){
-      upTop(this);
+      upTop();
     }
   }
-
-
-
 
   for (var i = 0; i < aFixedLeftWrLi.length; i++) {
     aFixedLeftWrLi[i].index=i;
@@ -719,24 +723,44 @@ function leftScroll(){
 
       if ( document.documentElement.scrollTop,document.body.scrollTop > scrollNum) {
         scrollTimer = setInterval(function(){
-          var diffNum = document.body.scrollTop - scrollNum;
+          var diffNum = Math.abs(document.body.scrollTop - scrollNum);
           var sclTopNow = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-          if (Math.abs(diffNum) <= 50 ) {              // 如果当前滚动范围小于50，那么直接取消之后的滚动事件
+          if (diffNum <= 50 ) {
              clearInterval(scrollTimer);
              document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
-          }else {
+          } else if ( diffNum > 50 && diffNum <= 500 ) {
              document.documentElement.scrollTop,document.body.scrollTop -= 50;
+          } else if ( diffNum > 500 && diffNum <= 1000 ) {
+             document.documentElement.scrollTop,document.body.scrollTop -= 100;
+          } else if ( diffNum > 1000 && diffNum <= 2000 ) {
+             document.documentElement.scrollTop,document.body.scrollTop -= 200;
+          } else if ( diffNum > 2000 && diffNum <= 3000 ) {
+             document.documentElement.scrollTop,document.body.scrollTop -= 300;
+          } else if ( diffNum > 3000 && diffNum <= 4000 ) {
+             document.documentElement.scrollTop,document.body.scrollTop -= 400;
+          } else {
+            document.documentElement.scrollTop,document.body.scrollTop -= 500;
           }
         },5)
       } else {
         scrollTimer = setInterval(function(){
-           var diffNum = document.body.scrollTop - scrollNum;
+           var diffNum = Math.abs(document.body.scrollTop - scrollNum);
            var sclTopNow = document.body.scrollTop + document.documentElement.scrollTop;
-           if (Math.abs(diffNum) <= 50 ) {              // 如果当前滚动范围小于50，那么直接取消之后的滚动事件
+           if ( diffNum <= 50 ) {
               clearInterval(scrollTimer);
               document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
-           }else {
+           } else if ( diffNum > 50 && diffNum <= 500 ) {
               document.documentElement.scrollTop,document.body.scrollTop += 50;
+           } else if ( diffNum > 500 && diffNum <= 1000 ) {
+              document.documentElement.scrollTop,document.body.scrollTop += 100;
+           } else if ( diffNum > 1000 && diffNum <= 2000 ) {
+              document.documentElement.scrollTop,document.body.scrollTop += 200;
+           } else if ( diffNum > 2000 && diffNum <= 3000 ) {
+              document.documentElement.scrollTop,document.body.scrollTop += 300;
+           } else if ( diffNum > 3000 && diffNum <= 4000 ) {
+              document.documentElement.scrollTop,document.body.scrollTop += 400;
+           } else {
+             document.documentElement.scrollTop,document.body.scrollTop += 500;
            }
         },5);
       }
@@ -768,58 +792,58 @@ var oRankTopUl=document.getElementById('rank-top-ul'),
 strong();   //强档推荐
 
 var oVipStrong=document.getElementById('vip-strong'),    //强推作品
-      oStrongBtn=getByClass(oVipStrong,'strong-btn')[0],
-      oVipList=getByClass(oVipStrong,'vip-list'),
-      aStrongA=oStrongBtn.getElementsByTagName('a'),
-      oStrongDirecton=getByClass(oVipStrong,'strong-directon');
+    oStrongBtn=getByClass(oVipStrong,'strong-btn')[0],
+    oVipList=getByClass(oVipStrong,'vip-list'),
+    aStrongA=oStrongBtn.getElementsByTagName('a'),
+    oStrongDirecton=getByClass(oVipStrong,'strong-directon');
 
   jump(aStrongA,oVipList,oStrongDirecton);
 
 var oVipSerial=document.getElementById('vip-serial'),      // 连载表
-      oSerialDay=getByClass(oVipSerial,'serial-day')[0],
-      aSerialDayA=oSerialDay.getElementsByTagName('a'),
-      oSerialBox=getByClass(oVipSerial,'serial-box')[0],
-      aSerialBoxUl=oSerialBox.getElementsByTagName('ul');
+    oSerialDay=getByClass(oVipSerial,'serial-day')[0],
+    aSerialDayA=oSerialDay.getElementsByTagName('a'),
+    oSerialBox=getByClass(oVipSerial,'serial-box')[0],
+    aSerialBoxUl=oSerialBox.getElementsByTagName('ul');
 
   jump(aSerialDayA,aSerialBoxUl);
 
 upFast();  // 上升最快
 
 var oUpChartRank=document.getElementById('up-chart-rank'),  //月票排行
-      oRankTitleBtn=getByClass(oUpChartRank,'rank-title-btn')[0],
-      aRankTitleBtnA=oRankTitleBtn.getElementsByTagName('a'),
-      aChartListMain=getByClass(oUpChartRank,'chart-list-main');
+    oRankTitleBtn=getByClass(oUpChartRank,'rank-title-btn')[0],
+    aRankTitleBtnA=oRankTitleBtn.getElementsByTagName('a'),
+    aChartListMain=getByClass(oUpChartRank,'chart-list-main');
 
   jump(aRankTitleBtnA,aChartListMain);
 
 var oLotBlood=document.getElementById('lot-blood'),   //热血冒险
-      oTopTag=getByClass(oLotBlood,'top-tag')[0],
-      aTopTagA=oTopTag.getElementsByTagName('a'),
-      aLotBloodUl=oLotBlood.getElementsByTagName('ul');
+    oTopTag=getByClass(oLotBlood,'top-tag')[0],
+    aTopTagA=oTopTag.getElementsByTagName('a'),
+    aLotBloodUl=oLotBlood.getElementsByTagName('ul');
 
   jump(aTopTagA,aLotBloodUl);
 
 summaryLeft();    // 热门排行-左
 
 var oSectionSign=document.getElementById('section-sign'),     //签约作品
-      oSectionSignUl=oSectionSign.getElementsByTagName('ul')[0],
-      aSectionSignLi=oSectionSignUl.getElementsByTagName('li'),
-      oMainRightSummary=getByClass(oSectionSign,'main-right-summary')[0],
-      aSummaryContent=getByClass(oMainRightSummary,'summary-content'),
-      oSignMainLeft=getByClass(oSectionSign,'sign-main-left')[0],
-      aSignMainLeftA=oSignMainLeft.getElementsByTagName('a');
+    oSectionSignUl=oSectionSign.getElementsByTagName('ul')[0],
+    aSectionSignLi=oSectionSignUl.getElementsByTagName('li'),
+    oMainRightSummary=getByClass(oSectionSign,'main-right-summary')[0],
+    aSummaryContent=getByClass(oMainRightSummary,'summary-content'),
+    oSignMainLeft=getByClass(oSectionSign,'sign-main-left')[0],
+    aSignMainLeftA=oSignMainLeft.getElementsByTagName('a');
 
   jump(aSectionSignLi,aSummaryContent,aSignMainLeftA)
 
 var oSectionSign2=document.getElementById('section-sign2'),    //轻小说
-      oSectionSignUl2=oSectionSign2.getElementsByTagName('ul')[0],
-      aSectionSignLi2=oSectionSignUl2.getElementsByTagName('li'),
-      oMainRightSummary2=getByClass(oSectionSign2,'main-right-summary')[0],
-      aSummaryContent2=getByClass(oMainRightSummary2,'summary-content'),
-      oSignMainLeft2=getByClass(oSectionSign2,'sign-main-left')[0],
-      aSignMainLeftA2=oSignMainLeft2.getElementsByTagName('a');
+    oSectionSignUl2=oSectionSign2.getElementsByTagName('ul')[0],
+    aSectionSignLi2=oSectionSignUl2.getElementsByTagName('li'),
+    oMainRightSummary2=getByClass(oSectionSign2,'main-right-summary')[0],
+    aSummaryContent2=getByClass(oMainRightSummary2,'summary-content'),
+    oSignMainLeft2=getByClass(oSectionSign2,'sign-main-left')[0],
+    aSignMainLeftA2=oSignMainLeft2.getElementsByTagName('a');
 
-      jump(aSectionSignLi2,aSummaryContent2,aSignMainLeftA2)
+  jump(aSectionSignLi2,aSummaryContent2,aSignMainLeftA2)
 
 contentBottom();//独家动画移动
 
