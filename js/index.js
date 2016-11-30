@@ -1,3 +1,4 @@
+  /*  ----------------  共用  --------------------   */
   //getByClass
   function getByClass(oParent,sClass){
     var aEle=oParent.getElementsByTagName('*');
@@ -11,7 +12,7 @@
   return aResult;
   };
 
-  // 点击跳转
+  // 点击瞬时跳转
   function click(list,oDiv) {
     for(var i=0; i<list.length; i++) {
       list[i].index = i;
@@ -26,7 +27,7 @@
     }
   }
 
-  //快速跳转
+  // 移入瞬时跳转
   function jump(list,oDiv,oDiv2) {
     for(var i=0; i<list.length; i++) {
       list[i].index = i;
@@ -47,6 +48,28 @@
     }
   }
 
+  // 变更瞬时转换
+  function changeJump(list,oDiv,oDiv2) {
+    for(var i=0; i<list.length; i++) {
+      list[i].index = i;
+      list[i].onmouseover = function() {
+        for(var j=0; j<list.length; j++){
+          list[j].className='';
+          oDiv[j].style.display='block';
+          if (oDiv2) {
+            oDiv2[j].style.display='none';
+          }
+        }
+        this.className='active';
+        oDiv[this.index].style.display='none';
+        if(oDiv2 != null && oDiv2 != undefined) {
+          oDiv2[this.index].style.display='block';
+        }
+      }
+    }
+  }
+
+  // 移入缓慢跳转
   function slowJump(list,oDiv,oDiv2){
     for (var i = 0; i < list.length; i++) {
       list[i].index=i;
@@ -71,12 +94,16 @@
     }
   }
 
+
+
+
+  /* ----------------  主体  ---------------------  */
   //top
   function topAd(){
-    var oTopAd=document.getElementById('in-top-ad-bg');
-    var oTopBtnWr=getByClass(oTopAd,'top-btn-wr')[0];
-    var oInTopAdMain=getByClass(oTopAd,'in-top-ad-main')[0];
-    var aTopBtnA=oTopBtnWr.getElementsByTagName('a');
+    var oTopAd=document.getElementById('in-top-ad-bg'),
+        oTopBtnWr=getByClass(oTopAd,'top-btn-wr')[0],
+        oInTopAdMain=getByClass(oTopAd,'in-top-ad-main')[0],
+        aTopBtnA=oTopBtnWr.getElementsByTagName('a');
 
     for (var i = 0; i < aTopBtnA.length; i++) {
       aTopBtnA[i].index=i;
@@ -96,13 +123,24 @@
     }
   }
 
+  //大家都在搜
+  function topSearchList(){
+    var oTopSearchList=document.getElementById('top-search-list'),
+        oTopSearchListLi=oTopSearchList.getElementsByTagName('li'),
+        oSearchListLi=getByClass(oTopSearchList,'search-list-li'),
+        oSearchListText=getByClass(oTopSearchList,'search-list-text');
+
+    changeJump(oTopSearchListLi,oSearchListLi,oSearchListText);
+  };
+
   //强档推荐
   function strong(){
-    var oNavStrongWrap=document.getElementById('nav-strong-wrap');
-    var oTitleBtn=getByClass(oNavStrongWrap,'title-btn')[0];
-    var aTitleBtnA=oTitleBtn.getElementsByTagName('a');
-    var oStrongInList=getByClass(oNavStrongWrap,'in-list')[0];
-    var oStrongNext=getByClass(oNavStrongWrap,'box-next')[0];
+    var oNavStrongWrap=document.getElementById('nav-strong-wrap'),
+        oTitleBtn=getByClass(oNavStrongWrap,'title-btn')[0],
+        aTitleBtnA=oTitleBtn.getElementsByTagName('a'),
+        oStrongInList=getByClass(oNavStrongWrap,'in-list')[0],
+        oStrongNext=getByClass(oNavStrongWrap,'box-next')[0],
+        oVipStrong=document.getElementById('vip-strong');
 
     var navStrongTra=0;
     var navStrongNow=0;
@@ -157,16 +195,14 @@
       }
     }
 
-    var oVipStrong=document.getElementById('vip-strong')
-
     //强推作品-全部作品
     function strongAll(){
-      var oStrongDirecton1=getByClass(oVipStrong,'strong-directon')[0];
-      var oBtnPrev1=getByClass(oStrongDirecton1,'btn-prev')[0];
-      var oBtnNext1=getByClass(oStrongDirecton1,'btn-next')[0];
-      var oVipList1=getByClass(oVipStrong,'vip-list')[0];
-      var aInList1=oVipList1.getElementsByTagName('ul');
-      var aH5=oStrongDirecton1.getElementsByTagName('h5')[0];
+      var oStrongDirecton1=getByClass(oVipStrong,'strong-directon')[0],
+          oBtnPrev1=getByClass(oStrongDirecton1,'btn-prev')[0],
+          oBtnNext1=getByClass(oStrongDirecton1,'btn-next')[0],
+          oVipList1=getByClass(oVipStrong,'vip-list')[0],
+          aInList1=oVipList1.getElementsByTagName('ul'),
+          aH5=oStrongDirecton1.getElementsByTagName('h5')[0];
 
       var sNow=0;
 
@@ -197,13 +233,17 @@
         };
         sTab(aInList1);
       };
+    }
+    strongAll();
 
-      var oStrongDirecton2=getByClass(oVipStrong,'strong-directon')[1];
-      var oBtnPrev2=getByClass(oStrongDirecton2,'btn-prev')[0];
-      var oBtnNext2=getByClass(oStrongDirecton2,'btn-next')[0];
-      var oVipList2=getByClass(oVipStrong,'vip-list')[1];
-      var aInList2=oVipList2.getElementsByTagName('ul');
-      var aH52=oStrongDirecton2.getElementsByTagName('h5')[0];
+    //强推作品-女生
+    function strongGirl(){
+      var oStrongDirecton2=getByClass(oVipStrong,'strong-directon')[1],
+          oBtnPrev2=getByClass(oStrongDirecton2,'btn-prev')[0],
+          oBtnNext2=getByClass(oStrongDirecton2,'btn-next')[0],
+          oVipList2=getByClass(oVipStrong,'vip-list')[1],
+          aInList2=oVipList2.getElementsByTagName('ul'),
+          aH52=oStrongDirecton2.getElementsByTagName('h5')[0];
 
       var sNow2=0;
 
@@ -235,20 +275,20 @@
         sTab2(aInList2);
       };
     }
-    strongAll();
+
+    strongGirl();
+
   }
-
-
 
   // 上升最快
   function upFast(){
-    var oUpLeft=document.getElementById('up-left');
-    var oPageBox=getByClass(oUpLeft,'page-box')[0];
-    var aPageBoxA=oPageBox.getElementsByTagName('a');
-    var oUpBox=getByClass(oUpLeft,'up-box')[0];
-    var aUpBoxUl=oUpBox.getElementsByTagName('ul');
-    var oUpPrev=getByClass(oUpLeft,'prev')[0];
-    var oUpNext=getByClass(oUpLeft,'next')[0];
+    var oUpLeft=document.getElementById('up-left'),
+        oPageBox=getByClass(oUpLeft,'page-box')[0],
+        aPageBoxA=oPageBox.getElementsByTagName('a'),
+        oUpBox=getByClass(oUpLeft,'up-box')[0],
+        aUpBoxUl=oUpBox.getElementsByTagName('ul'),
+        oUpPrev=getByClass(oUpLeft,'prev')[0],
+        oUpNext=getByClass(oUpLeft,'next')[0];
 
     var UpNow=0;
 
@@ -300,36 +340,113 @@
 
   // 热门排行-左
   function summaryLeft(){
-    var oSummaryLeft=document.getElementById('nav-summary-left');
-    var oSummaryPrev=getByClass(oSummaryLeft,'prev')[0];
-    var oSummaryNext=getByClass(oSummaryLeft,'next')[0];
+    var oSummaryLeft=document.getElementById('nav-summary-left'),
+        oSummaryPrev=getByClass(oSummaryLeft,'prev')[0],
+        oSummaryNext=getByClass(oSummaryLeft,'next')[0],
 
-    var oSummaryLeftList=getByClass(oSummaryLeft,'summary-left-list')[0];
-    var aListLi=oSummaryLeftList.getElementsByTagName('li');
+        oSummaryLeftList=getByClass(oSummaryLeft,'summary-left-list')[0],
+        aListLi=oSummaryLeftList.getElementsByTagName('li'),
 
-    var oSummaryLeftPage=getByClass(oSummaryLeft,'summary-left-page')[0];
-    var aPageA=oSummaryLeftPage.getElementsByTagName('a');
+        oSummaryLeftPage=getByClass(oSummaryLeft,'summary-left-page')[0],
+        aPageLi=oSummaryLeftPage.getElementsByTagName('li');
+    var SuNow=0,
+        timer=0;
 
-    var SuNow=0;
-    //渐变换页
-    function change(btn,oDiv){
-      for (var i = 0; i < btn.length; i++) {
-        btn[i].index=i;
-        btn[i].onclick=function(){
-          for (var i = 0; i < oDiv.length; i++) {
-            if (this.index!==i) {
-              oDiv[i].style.zIndex = 1;
-              oDiv[i].style.opacity = 0;
-              oDiv[this.index].style.zIndex = 50;
-              oDiv[this.index].style.opacity = 1;
-            }
-          }
-          SuNow=this.index;
-        };
-      };
+    //执行相应页面
+    function showPage(num) {
+      showBird(num);
+      showLi(num);
+      SuNow = num;
     }
 
-    change(aPageA,aListLi);
+    //显示相应小鸟条
+    function showLi(num){
+      for (var i = 0; i < aListLi.length; i++) {
+        if (num!==i) {
+          aListLi[i].style.zIndex = 1;
+          aListLi[i].style.opacity = 0;
+          aListLi[num].style.zIndex = 50;
+          aListLi[num].style.opacity = 1;
+        }
+      }
+    }
+
+    //小鸟动画生长
+    function showBird(num){
+      stopFly();
+      var flyInner = '<div id="flyDiv" style="width:0%"><span class="bird"></span></div>';
+      aPageLi[num].innerHTML = flyInner;
+      var flyDiv = document.getElementById('flyDiv');
+      timer = setInterval(function(){
+        var flyWidth = flyDiv.style.width;
+        if (parseFloat(flyWidth) >=100 ) {
+          stopFly();
+          switch (SuNow) {
+            case 0:
+              showPage(1);
+              break;
+            case 1:
+              showPage(2);
+              break;
+            default:
+              showPage(0);
+          }
+          return;
+        }
+
+        if (parseFloat(flyWidth) >=85) {
+          flyDiv.style.width = (parseFloat(flyWidth) + 0.2 + "%");
+        } else {
+          flyDiv.style.width = (parseFloat(flyWidth) + 0.5 + "%");
+        }
+      },30)
+    }
+
+    //停止小鸟生长动画
+    function stopFly(){
+      var flyDiv = document.getElementById('flyDiv');
+      if(flyDiv) flyDiv.parentNode.removeChild(flyDiv);
+      clearInterval(timer);
+    }
+    showPage(0);
+
+    //点击小鸟条显示相应页面
+    for (var i = 0; i < aPageLi.length; i++) {
+      aPageLi[i].onclick = function (x) {
+        console.log(i);
+        showPage(x);
+
+      }.bind(null,i)
+    };
+
+
+    //渐变换页
+    // function changeBanner(btn,oDiv){
+    //   for (var i = 0; i < btn.length; i++) {
+    //     btn[i].index=i;
+    //     btn[i].onclick=function(){
+    //       for (var i = 0; i < oDiv.length; i++) {
+    //         if (this.index!==i) {
+    //           oDiv[i].style.zIndex = 1;
+    //           oDiv[i].style.opacity = 0;
+    //           oDiv[this.index].style.zIndex = 50;
+    //           oDiv[this.index].style.opacity = 1;
+    //         }
+    //       }
+    //       SuNow=this.index;
+    //     };
+    //   };
+    // }
+    //
+    // changeBanner(aPageLi,aListLi);
+
+    // 上下一张按钮事件绑定
+    oSummaryLeft.onmouseover = oSummaryPrev.onmouseover = oSummaryNext.onmouseover =function () {
+      stopFly();
+    }
+    oSummaryLeft.onmouseout = oSummaryPrev.onmouseout = oSummaryNext.onmouseout =function () {
+      showPage(SuNow);
+    }
 
     function suTab(list){
       for (var i = 0; i < list.length; i++) {
@@ -360,10 +477,10 @@
 
   //独家动画移动
   function contentBottom(){
-    var oContentBottom=document.getElementById('content-bottom');
-    var oContentBottomPrev=getByClass(oContentBottom,'prev')[0];
-    var oContentBottomNext=getByClass(oContentBottom,'next')[0];
-    var oContentBottomUl=oContentBottom.getElementsByTagName('ul')[0];
+    var oContentBottom=document.getElementById('content-bottom'),
+        oContentBottomPrev=getByClass(oContentBottom,'prev')[0],
+        oContentBottomNext=getByClass(oContentBottom,'next')[0],
+        oContentBottomUl=oContentBottom.getElementsByTagName('ul')[0];
 
     var CBNow=0;
 
@@ -391,89 +508,89 @@
       }
     }
 
-    var aContentBottomLi=oContentBottomUl.getElementsByTagName('li');   //独家动画移入切换
-    var oSoleMain=document.getElementById('sole-main');
-    var oSoleMainLeft=getByClass(oSoleMain,'sole-main-left')[0];
-    var aSoleMainLeftA=oSoleMainLeft.getElementsByTagName('a');
-    var aContentTop=getByClass(oSoleMain,'content-top');
+    var aContentBottomLi=oContentBottomUl.getElementsByTagName('li'),   //独家动画移入切换
+        oSoleMain=document.getElementById('sole-main'),
+        oSoleMainLeft=getByClass(oSoleMain,'sole-main-left')[0],
+        aSoleMainLeftA=oSoleMainLeft.getElementsByTagName('a'),
+        aContentTop=getByClass(oSoleMain,'content-top');
 
     slowJump(aContentBottomLi,aSoleMainLeftA,aContentTop);
   };
 
   //最近更新
   function lotUpdata(){
-     var oLotUpdata=document.getElementById('lot-updata');
-     var oTitlePage=getByClass(oLotUpdata,'title-page')[0];
-     var oPageMain=getByClass(oTitlePage,'page-main')[0];
-     var aPageMainA=oPageMain.getElementsByTagName('a');
-     var oUpdataMain=getByClass(oLotUpdata,'updata-main')[0];
-     var aUpdataMainUl=oUpdataMain.getElementsByTagName('ul');
-     var oUpdataPrev=getByClass(oLotUpdata,'prev')[0];
-     var oUpdataNext=getByClass(oLotUpdata,'next')[0];
-     lotUpdataNow=0;
+     var oLotUpdata=document.getElementById('lot-updata'),
+         oTitlePage=getByClass(oLotUpdata,'title-page')[0],
+         oPageMain=getByClass(oTitlePage,'page-main')[0],
+         aPageMainA=oPageMain.getElementsByTagName('a'),
+         oUpdataMain=getByClass(oLotUpdata,'updata-main')[0],
+         aUpdataMainUl=oUpdataMain.getElementsByTagName('ul'),
+         oUpdataPrev=getByClass(oLotUpdata,'prev')[0],
+         oUpdataNext=getByClass(oLotUpdata,'next')[0],
+         lotUpdataNow=0;
 
-   for (var i = 0; i < aPageMainA.length; i++) {
-     aPageMainA[i].index=i;
-     aPageMainA[i].onclick=function(){
-       for (var i = 0; i < aPageMainA.length; i++) {
-         if(this.index!=i){
-           aPageMainA[i].className='';
-           aUpdataMainUl[i].style.zIndex='1';
-           aUpdataMainUl[i].style.opacity='0';
-         }
-         this.className='active';
-         aUpdataMainUl[this.index].style.zIndex='50';
-         aUpdataMainUl[this.index].style.opacity='1';
-         lotUpdataNow=this.index;
-       }
-     };
-   };
-
-   oUpdataPrev.onclick=function(){
-     lotUpdataNow--;
-     if(lotUpdataNow==-1){
-       lotUpdataNow=aPageMainA.length-1;
-     };
      for (var i = 0; i < aPageMainA.length; i++) {
-       aPageMainA[i].className='';
-       aUpdataMainUl[i].style.zIndex='1';
-       aUpdataMainUl[i].style.opacity='0';
-     }
-     aPageMainA[lotUpdataNow].className='active';
-     aUpdataMainUl[lotUpdataNow].style.zIndex='50';
-     aUpdataMainUl[lotUpdataNow].style.opacity='1';
+       aPageMainA[i].index=i;
+       aPageMainA[i].onclick=function(){
+         for (var i = 0; i < aPageMainA.length; i++) {
+           if(this.index!=i){
+             aPageMainA[i].className='';
+             aUpdataMainUl[i].style.zIndex='1';
+             aUpdataMainUl[i].style.opacity='0';
+           }
+           this.className='active';
+           aUpdataMainUl[this.index].style.zIndex='50';
+           aUpdataMainUl[this.index].style.opacity='1';
+           lotUpdataNow=this.index;
+         }
+       };
+     };
 
-   }
-   oUpdataNext.onclick=function(){
-     lotUpdataNow++;
-      if(lotUpdataNow==aPageMainA.length){
-        lotUpdataNow=0;
-      };
-      for (var i = 0; i < aPageMainA.length; i++) {
-        aPageMainA[i].className='';
-        aUpdataMainUl[i].style.zIndex='1';
-        aUpdataMainUl[i].style.opacity='0';
-      }
-      aPageMainA[lotUpdataNow].className='active';
-      aUpdataMainUl[lotUpdataNow].style.zIndex='50';
-      aUpdataMainUl[lotUpdataNow].style.opacity='1';
-   }
+     oUpdataPrev.onclick=function(){
+       lotUpdataNow--;
+       if(lotUpdataNow==-1){
+         lotUpdataNow=aPageMainA.length-1;
+       };
+       for (var i = 0; i < aPageMainA.length; i++) {
+         aPageMainA[i].className='';
+         aUpdataMainUl[i].style.zIndex='1';
+         aUpdataMainUl[i].style.opacity='0';
+       }
+       aPageMainA[lotUpdataNow].className='active';
+       aUpdataMainUl[lotUpdataNow].style.zIndex='50';
+       aUpdataMainUl[lotUpdataNow].style.opacity='1';
+     }
+     oUpdataNext.onclick=function(){
+       lotUpdataNow++;
+        if(lotUpdataNow==aPageMainA.length){
+          lotUpdataNow=0;
+        };
+        for (var i = 0; i < aPageMainA.length; i++) {
+          aPageMainA[i].className='';
+          aUpdataMainUl[i].style.zIndex='1';
+          aUpdataMainUl[i].style.opacity='0';
+        }
+        aPageMainA[lotUpdataNow].className='active';
+        aUpdataMainUl[lotUpdataNow].style.zIndex='50';
+        aUpdataMainUl[lotUpdataNow].style.opacity='1';
+     }
  }
 
   //周总排行榜
   function sectionWeek(){
-    var oSectionWeek=document.getElementById('section-week');
-    var oWeekTopRight=getByClass(oSectionWeek,'week-top-right')[0];
-    var aWeekTopRightA=oWeekTopRight.getElementsByTagName('a');
-    var oWeekMainLeft=getByClass(oSectionWeek,'week-main-left')[0];
-    var aWeekMainLeftA=oWeekMainLeft.getElementsByTagName('a');
-    var aWeekMainSort=getByClass(oSectionWeek,'week-main-sort');
-    var oWeekMainSort0=getByClass(oSectionWeek,'week-main-sort')[0];
-    var oWeekMainSort1=getByClass(oSectionWeek,'week-main-sort')[1];
-    var oWeekMainSort2=getByClass(oSectionWeek,'week-main-sort')[2];
-    var aWeekMainUl0=getByClass(oWeekMainSort0,'week-main-ul');
-    var aWeekMainUl1=getByClass(oWeekMainSort1,'week-main-ul');
-    var aWeekMainUl2=getByClass(oWeekMainSort2,'week-main-ul');
+    var oSectionWeek=document.getElementById('section-week'),
+        oWeekTopRight=getByClass(oSectionWeek,'week-top-right')[0],
+        aWeekTopRightA=oWeekTopRight.getElementsByTagName('a'),
+        oWeekMainLeft=getByClass(oSectionWeek,'week-main-left')[0],
+        aWeekMainLeftA=oWeekMainLeft.getElementsByTagName('a'),
+        aWeekMainSort=getByClass(oSectionWeek,'week-main-sort'),
+        oWeekMainSort0=getByClass(oSectionWeek,'week-main-sort')[0],
+        oWeekMainSort1=getByClass(oSectionWeek,'week-main-sort')[1],
+        oWeekMainSort2=getByClass(oSectionWeek,'week-main-sort')[2],
+        aWeekMainUl0=getByClass(oWeekMainSort0,'week-main-ul'),
+        aWeekMainUl1=getByClass(oWeekMainSort1,'week-main-ul'),
+        aWeekMainUl2=getByClass(oWeekMainSort2,'week-main-ul');
+
    for (var i = 0; i < aWeekTopRightA.length; i++) {
      aWeekTopRightA[i].index=i;
      aWeekTopRightA[i].onmouseover=function(){
@@ -503,6 +620,131 @@
    }
  }
 
+ //左侧边栏显示
+function leftActive(){
+ var oFixedLeftWr = document.getElementById('fixed-left-wr'),
+     aFixedLeftWrLi = oFixedLeftWr.getElementsByTagName('li'),
+     scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+
+ for (var i = 0; i < aFixedLeftWrLi.length; i++) {
+  aFixedLeftWrLi[i].index=i;
+  aFixedLeftWrLi[i].className="";
+
+    if ( scrollTop >= 757 && scrollTop<1100) {
+      aFixedLeftWrLi[0].className="active";
+    } else if ( scrollTop >= 1100 && scrollTop<1500 ) {
+      aFixedLeftWrLi[1].className="active";
+    } else if ( scrollTop >= 1500 && scrollTop<2060 ) {
+      aFixedLeftWrLi[2].className="active";
+    } else if ( scrollTop >= 2060 && scrollTop<2816 ) {
+      aFixedLeftWrLi[3].className="active";
+    } else if ( scrollTop >= 2816 && scrollTop<3216 ) {
+      aFixedLeftWrLi[4].className="active";
+    } else if ( scrollTop >= 3216 && scrollTop<3816 ) {
+      aFixedLeftWrLi[5].className="active";
+    } else if ( scrollTop >= 3816 && scrollTop<5863 ) {
+      aFixedLeftWrLi[6].className="active";
+    } else if ( scrollTop >= 5863 && scrollTop<6358 ) {
+      aFixedLeftWrLi[7].className="active";
+    } else if ( scrollTop >= 6358 ) {
+      aFixedLeftWrLi[8].className="active";
+    }
+ }
+}
+
+function leftScroll(){
+  var oFixedLeftWr = document.getElementById('fixed-left-wr'),
+      aFixedLeftWrLi = oFixedLeftWr.getElementsByTagName('li'),
+      oItemTop = document.getElementById('item-top'),
+      oFixedLeftLast = getByClass(oFixedLeftWr,'fixed-left-last')[0],
+      scrollTimer = 0;          //timer记得分开定义
+
+  window.onscroll = function(){
+    var scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+    //console.log(scrollTop);
+
+    if (scrollTop > 1200) {
+      oItemTop.style.display='block';
+    } else {
+      oItemTop.style.display='none';
+    }
+
+    leftActive();
+  }
+
+  function upTop(){
+    //window.pageYOffset,document.documentElement.scrollTop,document.body.scrollTop = 0;  //直接跳到顶部
+
+    clearInterval(scrollTimer);
+
+    scrollTimer = setInterval(function(){
+       var sclTopNow = document.body.scrollTop;
+       if(sclTopNow <= 0) {
+         clearInterval(scrollTimer);
+         return;
+       } else {
+          window.pageYOffset,document.documentElement.scrollTop,document.body.scrollTop -= 50;
+          if (Math.abs(diffNum) <= 50 ) {
+            document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
+          }
+       }
+     },15);
+  }
+
+  //点击跳转到top
+  oFixedLeftLast.onclick = function(){
+    upTop(this);
+  }
+
+  if (oItemTop.style.display="block") {
+    oItemTop.onclick=function(){
+      upTop(this);
+    }
+  }
+
+
+
+
+  for (var i = 0; i < aFixedLeftWrLi.length; i++) {
+    aFixedLeftWrLi[i].index=i;
+    aFixedLeftWrLi[i].onclick=function(){
+
+      clearInterval(scrollTimer);
+      for (var i = 0; i < aFixedLeftWrLi.length; i++) {
+        aFixedLeftWrLi[i].className="";
+      }
+      var scrollNum=this.getAttribute("data-scroll");
+      //window.pageYOffset,document.documentElement.scrollTop,document.body.scrollTop = scrollNum;  //无动画
+      this.className="active";
+
+      if ( document.documentElement.scrollTop,document.body.scrollTop > scrollNum) {
+        scrollTimer = setInterval(function(){
+          var diffNum = document.body.scrollTop - scrollNum;
+          var sclTopNow = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+          if (Math.abs(diffNum) <= 50 ) {              // 如果当前滚动范围小于50，那么直接取消之后的滚动事件
+             clearInterval(scrollTimer);
+             document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
+          }else {
+             document.documentElement.scrollTop,document.body.scrollTop -= 50;
+          }
+        },5)
+      } else {
+        scrollTimer = setInterval(function(){
+           var diffNum = document.body.scrollTop - scrollNum;
+           var sclTopNow = document.body.scrollTop + document.documentElement.scrollTop;
+           if (Math.abs(diffNum) <= 50 ) {              // 如果当前滚动范围小于50，那么直接取消之后的滚动事件
+              clearInterval(scrollTimer);
+              document.documentElement.scrollTop,document.body.scrollTop = scrollNum;
+           }else {
+              document.documentElement.scrollTop,document.body.scrollTop += 50;
+           }
+        },5);
+      }
+    }
+  }
+}
+
+
 window.onload=function(){
 
 // var oHtml=document.getElementById('html');
@@ -511,80 +753,82 @@ window.onload=function(){
 //
 // oFixedLeftWrLi.onclick="scroller(window, 300)";
 
+topSearchList();    //大家都在搜
+
 topAd();   //top
 
 // 热门排行
-var oRankTopUl=document.getElementById('rank-top-ul');
-  var oRankList=document.getElementById('rank-list');
-  var aRankTopLi=oRankTopUl.getElementsByTagName('li');
-  var aRankListDiv=oRankList.getElementsByTagName('div');
+var oRankTopUl=document.getElementById('rank-top-ul'),
+    oRankList=document.getElementById('rank-list'),
+    aRankTopLi=oRankTopUl.getElementsByTagName('li'),
+    aRankListDiv=oRankList.getElementsByTagName('div');
 
   jump(aRankTopLi,aRankListDiv);
 
-  strong();   //强档推荐
+strong();   //强档推荐
 
-  var oVipStrong=document.getElementById('vip-strong');    //强推作品
-    var oStrongBtn=getByClass(oVipStrong,'strong-btn')[0];
-    var oVipList=getByClass(oVipStrong,'vip-list');
-    var aStrongA=oStrongBtn.getElementsByTagName('a');
-    var oStrongDirecton=getByClass(oVipStrong,'strong-directon');
+var oVipStrong=document.getElementById('vip-strong'),    //强推作品
+      oStrongBtn=getByClass(oVipStrong,'strong-btn')[0],
+      oVipList=getByClass(oVipStrong,'vip-list'),
+      aStrongA=oStrongBtn.getElementsByTagName('a'),
+      oStrongDirecton=getByClass(oVipStrong,'strong-directon');
 
-    jump(aStrongA,oVipList,oStrongDirecton);
+  jump(aStrongA,oVipList,oStrongDirecton);
 
-
-//strongAll();    //强推作品-全部作品
-
-
-var oVipSerial=document.getElementById('vip-serial')      // 连载表
-  var oSerialDay=getByClass(oVipSerial,'serial-day')[0];
-  var aSerialDayA=oSerialDay.getElementsByTagName('a');
-  var oSerialBox=getByClass(oVipSerial,'serial-box')[0];
-  var aSerialBoxUl=oSerialBox.getElementsByTagName('ul');
+var oVipSerial=document.getElementById('vip-serial'),      // 连载表
+      oSerialDay=getByClass(oVipSerial,'serial-day')[0],
+      aSerialDayA=oSerialDay.getElementsByTagName('a'),
+      oSerialBox=getByClass(oVipSerial,'serial-box')[0],
+      aSerialBoxUl=oSerialBox.getElementsByTagName('ul');
 
   jump(aSerialDayA,aSerialBoxUl);
 
-  upFast();  // 上升最快
+upFast();  // 上升最快
 
-var oUpChartRank=document.getElementById('up-chart-rank');  //月票排行
-  var oRankTitleBtn=getByClass(oUpChartRank,'rank-title-btn')[0];
-  var aRankTitleBtnA=oRankTitleBtn.getElementsByTagName('a');
-  var aChartListMain=getByClass(oUpChartRank,'chart-list-main');
+var oUpChartRank=document.getElementById('up-chart-rank'),  //月票排行
+      oRankTitleBtn=getByClass(oUpChartRank,'rank-title-btn')[0],
+      aRankTitleBtnA=oRankTitleBtn.getElementsByTagName('a'),
+      aChartListMain=getByClass(oUpChartRank,'chart-list-main');
 
   jump(aRankTitleBtnA,aChartListMain);
 
-var oLotBlood=document.getElementById('lot-blood');   //热血冒险
-  var oTopTag=getByClass(oLotBlood,'top-tag')[0];
-  var aTopTagA=oTopTag.getElementsByTagName('a');
-  var aLotBloodUl=oLotBlood.getElementsByTagName('ul');
+var oLotBlood=document.getElementById('lot-blood'),   //热血冒险
+      oTopTag=getByClass(oLotBlood,'top-tag')[0],
+      aTopTagA=oTopTag.getElementsByTagName('a'),
+      aLotBloodUl=oLotBlood.getElementsByTagName('ul');
 
   jump(aTopTagA,aLotBloodUl);
 
-  summaryLeft();    // 热门排行-左
+summaryLeft();    // 热门排行-左
 
-var oSectionSign=document.getElementById('section-sign');     //签约作品
-  var oSectionSignUl=oSectionSign.getElementsByTagName('ul')[0];
-  var aSectionSignLi=oSectionSignUl.getElementsByTagName('li');
-  var oMainRightSummary=getByClass(oSectionSign,'main-right-summary')[0];
-  var aSummaryContent=getByClass(oMainRightSummary,'summary-content');
-  var oSignMainLeft=getByClass(oSectionSign,'sign-main-left')[0];
-  var aSignMainLeftA=oSignMainLeft.getElementsByTagName('a');
+var oSectionSign=document.getElementById('section-sign'),     //签约作品
+      oSectionSignUl=oSectionSign.getElementsByTagName('ul')[0],
+      aSectionSignLi=oSectionSignUl.getElementsByTagName('li'),
+      oMainRightSummary=getByClass(oSectionSign,'main-right-summary')[0],
+      aSummaryContent=getByClass(oMainRightSummary,'summary-content'),
+      oSignMainLeft=getByClass(oSectionSign,'sign-main-left')[0],
+      aSignMainLeftA=oSignMainLeft.getElementsByTagName('a');
+
   jump(aSectionSignLi,aSummaryContent,aSignMainLeftA)
 
-var oSectionSign2=document.getElementById('section-sign2');    //轻小说
-  var oSectionSignUl2=oSectionSign2.getElementsByTagName('ul')[0];
-  var aSectionSignLi2=oSectionSignUl2.getElementsByTagName('li');
-  var oMainRightSummary2=getByClass(oSectionSign2,'main-right-summary')[0];
-  var aSummaryContent2=getByClass(oMainRightSummary2,'summary-content');
-  var oSignMainLeft2=getByClass(oSectionSign2,'sign-main-left')[0];
-  var aSignMainLeftA2=oSignMainLeft2.getElementsByTagName('a');
-  jump(aSectionSignLi2,aSummaryContent2,aSignMainLeftA2)
+var oSectionSign2=document.getElementById('section-sign2'),    //轻小说
+      oSectionSignUl2=oSectionSign2.getElementsByTagName('ul')[0],
+      aSectionSignLi2=oSectionSignUl2.getElementsByTagName('li'),
+      oMainRightSummary2=getByClass(oSectionSign2,'main-right-summary')[0],
+      aSummaryContent2=getByClass(oMainRightSummary2,'summary-content'),
+      oSignMainLeft2=getByClass(oSectionSign2,'sign-main-left')[0],
+      aSignMainLeftA2=oSignMainLeft2.getElementsByTagName('a');
 
-  contentBottom();//独家动画移动
+      jump(aSectionSignLi2,aSummaryContent2,aSignMainLeftA2)
 
+contentBottom();//独家动画移动
 
+lotUpdata();   //最近更新
 
- lotUpdata();   //最近更新
+sectionWeek();    //周总排行榜
 
-  sectionWeek();    //周总排行榜
+leftActive();    //左侧边栏显示
+
+leftScroll();   //左侧边栏滚动
 
 }
