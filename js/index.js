@@ -419,7 +419,6 @@
     //点击小鸟条显示相应页面
     for (var i = 0; i < aPageLi.length; i++) {
       aPageLi[i].onclick = function (x) {
-        console.log(i);
         showPage(x);
 
       }.bind(null,i)

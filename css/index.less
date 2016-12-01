@@ -140,18 +140,33 @@ body{
 
 .bg-orange{
   background-color: #f1823a;
+  i:before{
+    border-bottom: 30px solid #f1823a;
+  }
 }
 .bg-green{
   background-color: #7fc63a;
+  i:before{
+    border-bottom: 30px solid #7fc63a;
+  }
 }
 .bg-blue{
   background-color: #5fa3ea;
+  i:before{
+    border-bottom: 30px solid #5fa3ea;
+  }
 }
 .bg-yellow{
   background-color: #f9ba49;
+  i:before{
+    border-bottom: 30px solid #f9ba49;
+  }
 }
 .bg-red{
   background-color: #f0574b;
+  i:before{
+    border-bottom: 30px solid #f0574b;
+  }
 }
 
 /*less*/
@@ -1042,19 +1057,31 @@ body{
             .nav-summary-name{
               position: absolute;
               z-index: 5;
-              transition: all 1s;
-              left: -6px;
+              left: 0;
               bottom: 0;
               height: 30px;
-              transform: skewX(20deg);
-              i{margin-left: 6px;
-                font-style: "微软雅黑";
-                display: inline-block;;
+              //transform: skewX(20deg);//有兼容问题
+              i{
+                position: relative;
+                margin-left: 2px;
+                padding-right: 4px;
+                font-style: @fontfamily-y;
+                display: inline-block;
                 font-size: 16px;
                 line-height: 30px;
                 color: #fff;
                 font-weight: bold;
-                transform: skewX(-20deg);
+                //transform: skewX(-20deg);//有兼容问题
+              }
+              i:before{
+                position: absolute;
+                display: block;
+                content: "";
+                height: 0;
+                width: 0;
+                right: -8px;
+                top: 0;
+                border-right: 8px solid transparent;
               }
             }
           }
