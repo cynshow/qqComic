@@ -338,7 +338,7 @@
     }
   }
 
-  // 热门排行-左
+  // 热门排行-小鸟banner
   function summaryLeft(){
     var oSummaryLeft=document.getElementById('nav-summary-left'),
         oSummaryPrev=getByClass(oSummaryLeft,'prev')[0],
@@ -378,8 +378,8 @@
       aPageLi[num].innerHTML = flyInner;
       var flyDiv = document.getElementById('flyDiv');
       timer = setInterval(function(){
-        var flyWidth = flyDiv.style.width;
-        if (parseFloat(flyWidth) >=100 ) {
+        var flyWidth = parseFloat(flyDiv.style.width);
+        if (flyWidth >=100 ) {
           stopFly();
           switch (SuNow) {
             case 0:
@@ -394,10 +394,16 @@
           return;
         }
 
-        if (parseFloat(flyWidth) >=85) {
-          flyDiv.style.width = (parseFloat(flyWidth) + 0.2 + "%");
+        if (flyWidth >= 95 || flyWidth <= 5) {
+          flyDiv.style.width = (flyWidth + 0.2 + "%");
+        } else if (flyWidth >= 90 && flyWidth < 95 || flyWidth <=10 && flyWidth > 5) {
+          flyDiv.style.width = (flyWidth + 0.3 + "%");
+        } else if (flyWidth >= 85 && flyWidth < 90 || flyWidth <=15 && flyWidth > 10) {
+          flyDiv.style.width = (flyWidth + 0.4 + "%");
+        } else if (flyWidth >= 80 && flyWidth < 85 || flyWidth <=20 && flyWidth > 15) {
+          flyDiv.style.width = (flyWidth + 0.5 + "%");
         } else {
-          flyDiv.style.width = (parseFloat(flyWidth) + 0.5 + "%");
+          flyDiv.style.width = (flyWidth + 0.6 + "%");
         }
       },30)
     }
@@ -823,7 +829,7 @@ var oLotBlood=document.getElementById('lot-blood'),   //热血冒险
 
   jump(aTopTagA,aLotBloodUl);
 
-summaryLeft();    // 热门排行-左
+summaryLeft();    // 热门排行-小鸟banner
 
 var oSectionSign=document.getElementById('section-sign'),     //签约作品
     oSectionSignUl=oSectionSign.getElementsByTagName('ul')[0],
