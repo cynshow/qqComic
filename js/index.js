@@ -664,6 +664,7 @@ function leftScroll(){
       oFixedLeftLast = getByClass(oFixedLeftWr,'fixed-left-last')[0],
       scrollTimer = 0;          //timer记得分开定义
 
+  //右侧边栏返回top按钮
   window.onscroll = function(){
     var scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
     //console.log(scrollTop);
@@ -784,6 +785,8 @@ window.onload=function(){
 
 topSearchList();    //大家都在搜
 
+
+
 topAd();   //top
 
 // 热门排行
@@ -859,5 +862,14 @@ sectionWeek();    //周总排行榜
 leftActive();    //左侧边栏显示
 
 leftScroll();   //左侧边栏滚动
+
+var oItemTop = document.getElementById('item-top'),     //右侧边栏返回top
+    scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+
+    if (scrollTop > 1200) {
+      oItemTop.style.display='block';
+    } else {
+      oItemTop.style.display='none';
+    }
 
 }
